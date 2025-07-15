@@ -9,10 +9,10 @@ def get_edgar_data(cik, tag):
     # Construct URL for EDGAR API call using CIK and financial tag
     url = f'https://data.sec.gov/api/xbrl/companyconcept/CIK{cik}/us-gaap/{tag}.json'
     headers = {'User-Agent': "tnguyen65@seattleu.edu"}  
-    response = requests.get(url, headers=headers)  # Send GET request to EDGAR API
-    data = response.json()  # Try to parse JSON response
+    response = requests.get(url, headers=headers)  
+    data = response.json()  
     units = data['units']['USD']  # Extract USD units from the response
-    df = pd.DataFrame(units)  # Convert data to pandas DataFrame
+    df = pd.DataFrame(units)  # Convert to DataFrame
     return df  # Return the DataFrame
     
 
@@ -21,7 +21,7 @@ tags = {
     'Revenue': 'RevenueFromContractWithCustomerExcludingAssessedTax',  # Tag for revenue data
     'Assets': 'Assets',  # Tag for assets data
     'Net Income': 'NetIncomeLoss',  # Tag for net income data
-    'Gross Profit': 'GrossProfit',  # Tag for gross profit data (may not be available)
+    'Gross Profit': 'GrossProfit',  # Tag for gross profit data
     'Operating Expenses': 'OperatingExpenses'  # Tag for operating expenses data
 }
 
@@ -32,8 +32,6 @@ for name, tag in tags.items():  # Iterate over each financial metric and its tag
         continue
     df = df[(df['form'] == '10-K') & (df['fp'] == 'FY')]  # Filter for 10-K annual reports
     df = df.sort_values('fy', ascending=False).iloc[0:3]  # Sort by fiscal year and take last 3 years
-    # Print available columns for debugging
-    print(f"Available columns for {name}: {df.columns.tolist()}")
     # Select relevant columns, including 'start' if available
     base_columns = ['start', 'end', 'val', 'accn', 'fy', 'fp', 'form', 'filed', 'frame']
     selected_columns = [col for col in base_columns if col in df.columns]
