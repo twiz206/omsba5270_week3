@@ -2,7 +2,6 @@
 #OMSBA5270- Week 3
 #This script fetches financial data from the SEC EDGAR database.  It prints the CIK numbers of all companies in the SEC database.
 
-
 #import modules
 import requests
 import pandas as pd
