@@ -1,3 +1,12 @@
+#Thuan Nguyen
+#OMSBA5270- Week 3
+#This script fetches financial data from the SEC EDGAR database for Alphabet Inc. (CIK: 0001045810)
+
+
+
+
+
+
 import requests  # Import requests library for making HTTP requests
 import pandas as pd  # Import pandas library for data manipulation and table creation
 
